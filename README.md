@@ -36,7 +36,7 @@ This makes studying more efficient, interactive, and accessible — especially f
 **Note**: API key is loaded securely via Streamlit secrets (never hardcoded or committed).
 
 ### Demo Video
-[Link to your YouTube/Loom video here] (2-3 min demo showing full flow)
+https://youtu.be/QI3wLDK_SwU
 
 ### Impact
 Helps students save time on note review, improve self-assessment, reduce exam anxiety, and boost productivity — aligned with real student needs in competitive academic environments.

@@ -87,19 +87,27 @@ if st.session_state.ai_result:
             answers_str = "\n".join([f"Question {i+1}: {q}\nStudent's answer: {a}" for i, (q, a) in enumerate(zip(st.session_state.questions, st.session_state.user_answers))])
 
             verify_prompt = f"""
-            You are a strict but fair teacher grader.
-            Original lecture text (for reference): {text[:2000]}... (truncated content)
+            You are a strict, precise, and fair teacher grader for student quizzes.
 
-            Evaluate each of the 5 student answers:
-            - Say if it's Correct, Partial, or Incorrect.
-            - Give a short explanation (1-3 sentences).
-            - Assign a score from 0 to 10 for each.
-            - At the end, give an overall average score and motivational feedback.
+            Original lecture text (for reference): {text[:2000]}... (truncated)
+
+            Rules for grading:
+            - If the question is a multiple-choice (contains options like A), B), C), D) or similar), grade as BINARY:
+            - Correct (10/10) ONLY if the student's answer matches EXACTLY the correct option letter (e.g., "A" or "a" or "A)" — case-insensitive).
+            - Incorrect (0/10) if it doesn't match the correct option exactly.
+            - Do NOT mark as partial for MCQs unless the answer is close but not exact (e.g., typo in letter).
+            - Always identify the correct answer from the question text or context if needed.
+            - For open-ended questions, evaluate based on accuracy, completeness, and relevance: Correct (full), Partial, or Incorrect.
+            - For each question:
+            - State: Correct / Partial / Incorrect.
+            - Short explanation (1-3 sentences).
+            - Score 0-10.
+            - At the end: Overall average score and motivational feedback.
 
             Student's answers:
             {answers_str}
 
-            Format nicely in markdown: use numbered lists or a table.
+            Format output in markdown with numbered list for each question.
             """
 
             try:
